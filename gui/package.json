@@ -94,6 +94,7 @@
     "react-dom": "^16.11.0",
     "react-electron-titlebar": "^1.0.9",
     "regenerator-runtime": "^0.13.3",
+    "serialize-javascript": "^3.0.0",
     "serialport": "^8.0.5",
     "styled-components": "^4.4.1",
     "worker-loader": "^2.0.0"
@@ -134,5 +135,8 @@
     "style-loader": "^1.0.0",
     "ts-loader": "^6.2.1",
     "typescript": "^3.6.4"
+  },
+  "resolutions": {
+    "serialize-javascript": "^3.0.0"
   }
 }
