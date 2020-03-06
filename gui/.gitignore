@@ -3,4 +3,5 @@ out
 .webpack
 .DS_Store
 *.log
+.vscode
 dist
