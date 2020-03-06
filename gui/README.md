@@ -1,3 +1,17 @@
-To run: 
+To run:
 
-with yarn and/or npm install run yarn start or npm start
+With yarn installed: 
+
+
+```
+yarn 
+yarn start
+```
+
+
+With npm installed: 
+
+```
+npm 
+npm start
+```
