@@ -1,0 +1,45 @@
+module.exports = [
+  // Add support for native node modules
+  {
+    test: /\.node$/,
+    use: "node-loader",
+  },
+  {
+    test: /\.(m?js|node)$/,
+    exclude: /(.webpack|node_modules)/,
+    parser: { amd: false },
+    use: {
+      loader: "@marshallofsound/webpack-asset-relocator-loader",
+      options: {
+        outputAssetBase: "native_modules",
+      },
+    },
+  },
+  {
+    test: /\.(j|t)sx?$/,
+    exclude: /node_modules/,
+    loaders: [
+      {
+        loader: "babel-loader",
+      },
+    ],
+  },
+  {
+    test: /\.worker\.js$/,
+    use: { 
+      loader: 'worker-loader',
+      options: { inline: true }
+    }
+  },
+  {
+    test: /\.(scss|css)$/,
+    use: ["style-loader", "css-loader"],
+  },
+  {
+    test: /\.(jpg|png|svg|ico|icns)$/,
+    loader: "file-loader",
+    options: {
+      name: "[path][name].[ext]",
+    },
+  },
+];

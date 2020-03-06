@@ -1,0 +1,138 @@
+{
+  "name": "motor-controller",
+  "productName": "Motor Controller",
+  "version": "1.6.0",
+  "description": "Capstone Motor Controller",
+  "main": ".webpack/main",
+  "build": {
+    "appId": "com.capstone.motor-controller",
+    "buildDependenciesFromSource": true,
+    "icon": "Polar_Bear_Logo.png",
+    "directories": {
+      "buildResources": "resources"
+    },
+    "publish": null
+  },
+  "scripts": {
+    "start": "electron-forge start",
+    "package": "electron-forge package && mv .webpack/renderer/*?.worker.js .webpack/renderer/main_window/",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish",
+    "lint": "echo \"No linting configured\"",
+    "install": "electron-rebuild -f -s -v 7.1.10",
+    "dist": "electron-builder",
+    "bundle": "electron-forge package && mv .webpack/renderer/*?.worker.js .webpack/renderer/main_window/ && rm -rf out/ && electron-builder",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "keywords": [],
+  "author": "Ian Sweetland",
+  "license": "MIT",
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "electron-ts-react"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ],
+      "plugins": [
+        [
+          "@electron-forge/plugin-webpack",
+          {
+            "mainConfig": "./webpack.main.config.js",
+            "renderer": {
+              "config": "./webpack.renderer.config.js",
+              "entryPoints": [
+                {
+                  "html": "./public/index.html",
+                  "js": "./src/renderer/renderer.tsx",
+                  "name": "main_window"
+                }
+              ]
+            }
+          }
+        ]
+      ]
+    }
+  },
+  "dependencies": {
+    "@babel/core": "^7.6.4",
+    "@hot-loader/react-dom": "^16.10.2",
+    "@types/d3-array": "^2.0.0",
+    "@types/d3-axis": "^1.0.12",
+    "@types/d3-scale": "^2.2.0",
+    "@types/d3-selection": "^1.4.1",
+    "@types/d3-shape": "^1.3.2",
+    "@types/serialport": "^7.0.4",
+    "@types/styled-components": "^4.1.20",
+    "core-js": "^3.6.4",
+    "d3-array": "^2.4.0",
+    "d3-axis": "^1.0.12",
+    "d3-scale": "^3.2.1",
+    "d3-selection": "^1.4.1",
+    "d3-shape": "^1.3.7",
+    "electron-squirrel-startup": "^1.0.0",
+    "file-loader": "^4.2.0",
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0",
+    "react-electron-titlebar": "^1.0.9",
+    "regenerator-runtime": "^0.13.3",
+    "serialport": "^8.0.5",
+    "styled-components": "^4.4.1",
+    "worker-loader": "^2.0.0"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/plugin-proposal-object-rest-spread": "^7.6.2",
+    "@babel/preset-env": "^7.6.3",
+    "@babel/preset-react": "^7.6.3",
+    "@babel/preset-typescript": "^7.6.0",
+    "@electron-forge/cli": "^6.0.0-beta.45",
+    "@electron-forge/maker-deb": "^6.0.0-beta.45",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.45",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.45",
+    "@electron-forge/maker-zip": "^6.0.0-beta.45",
+    "@electron-forge/plugin-webpack": "^6.0.0-beta.45",
+    "@marshallofsound/webpack-asset-relocator-loader": "^0.5.0",
+    "@types/node": "^13.7.0",
+    "@types/react": "^16.9.11",
+    "@types/react-dom": "^16.9.3",
+    "@typescript-eslint/eslint-plugin": "^2.6.0",
+    "@typescript-eslint/parser": "^2.6.0",
+    "babel-eslint": "^10.0.3",
+    "babel-loader": "^8.0.6",
+    "css-loader": "^3.2.0",
+    "electron": "^7.1.10",
+    "electron-builder": "^22.3.2",
+    "eslint": "^6.6.0",
+    "eslint-config-prettier": "^6.5.0",
+    "eslint-config-react-app": "^5.0.2",
+    "eslint-plugin-flowtype": "^4.3.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.16.0",
+    "eslint-plugin-react-hooks": "^2.2.0",
+    "node-loader": "^0.6.0",
+    "react-hot-loader": "^4.12.15",
+    "style-loader": "^1.0.0",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.6.4"
+  }
+}
