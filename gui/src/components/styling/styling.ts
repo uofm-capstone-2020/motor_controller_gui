@@ -33,12 +33,12 @@ export const StyledInput = styled.input<{ valid: boolean }>`
 `
 
 export const Button = styled.button<{ disabled?: boolean, height?: string }>`
-  width: 130px;
+  width: 170px;
   height: ${ ({ height }) => height ? 'height' : '45px'};
   padding: 10px 25px;
   border-radius: 30px;
-  font-size: 11px;
-  background-color: ${ ({ disabled }) => disabled ? 'grey' : '#4b90ca'};
+  font-size: 18px;
+  background-color: ${ ({ disabled }) => disabled ? 'grey' : '#367AFF'};
   border: 0;
   transition-property: transform;
   transition-duration: 0.3s;
