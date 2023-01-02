@@ -149,6 +149,7 @@ const Tab = styled.h2<{ selected?: boolean }>`
 `;
 
 const StyledHeader = styled.div`
+  grid-area: header;
   width: 100%;
   display: flex;
   flex-direction: row;

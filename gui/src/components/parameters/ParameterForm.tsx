@@ -1,12 +1,12 @@
 /**
  * messages are sent in 7 byte formats
- * 
+ *
  * 1st byte is the type of request to the microcontroller
- * 
- * Subsequent bytes are the payload of the request 
+ *
+ * Subsequent bytes are the payload of the request
  *  - only needed when writing a control parameter into flash memory
  *  - need to include the 2 byte parameter ID in this case
- * 
+ *
  * Types of Requests:
  *    0xEE: Erase flash memory
  *    0x97: Program flash memory with the supplied payload
@@ -14,12 +14,12 @@
  *    0x1E: start low-frequency live logging
  *    0x10: Cancel live logging
  *    0x1D: Download the data log
- * 
- * 
+ *
+ *
  * Note: When writing parameters, this program will clear all of their
  *       current values on the microcontroller and update them with what is in the
  *       GUI. (Might be more efficient to write individual parameters???)
- * 
+ *
  */
 
 import React, { Component } from "react";
@@ -149,7 +149,12 @@ export default class ParameterForm extends Component<
     return (
       <>
         <Container>
-          <div style={{ margin: "0 2%", alignSelf: "center" }}>
+          <div
+            style={{
+              margin: "0 2%",
+              alignSelf: "center",
+            }}
+          >
             <Header>Configuration Parameters</Header>
             <Search
               placeholder="Search..."
@@ -201,10 +206,31 @@ export default class ParameterForm extends Component<
             </span>
           )}
         </Footer>
+        <Menu>
+          <h2>Profiles</h2>
+          <div>
+            <p>Hello</p>
+            <p>Hello</p>
+            <p>Hello</p>
+            <p>Hello</p>
+            <p>Hello</p>
+            <p>Hello</p>
+            <p>Hello</p>
+          </div>
+          <p>button</p>
+        </Menu>
       </>
     );
   }
 }
+
+const Menu = styled.div`
+  grid-area: menu;
+  display: grid;
+  background-color: #e4e4e4;
+  padding: 1%;
+  grid-template-rows: 1fr 7fr 1fr;
+`;
 
 const Search = styled.input`
   background-color: #454545;
@@ -215,14 +241,15 @@ const Search = styled.input`
 `;
 
 const Header = styled.h2`
-    margin: 0;
-    float: left;
-    display: inline-block
-    color: #4b90ca;
-    cursor: default;
+  margin: 0;
+  float: left;
+  display: inline-block;
+  color: #4b90ca;
+  cursor: default;
 `;
 
 const Footer = styled.div`
+  grid-area: footer;
   width: 100%;
   display: grid;
   grid-template-columns: 1.5fr 6fr 2fr;
@@ -234,6 +261,7 @@ const Footer = styled.div`
 `;
 
 const Container = styled.div`
+  grid-area: container;
   padding: 1%;
   display: grid;
   grid-template-rows: 1fr 7fr;
