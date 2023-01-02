@@ -1,108 +1,133 @@
-import React, { Component } from 'react';
-import styled from 'styled-components'
+import React, { Component } from "react";
+import styled from "styled-components";
 import { hot } from "react-hot-loader/root";
-import './App.css';
-import { list } from '../modules/serial';
-import SerialPort from 'serialport'
-import PortSelect from './PortSelect/PortSelect';
-import ToggleSwitch from './ToggleSwitch';
-import { ConnectionState, Mode } from './App';
-import { StyledInput } from './styling/styling';
-
+import "./App.css";
+import { list } from "../modules/serial";
+import SerialPort from "serialport";
+import PortSelect from "./PortSelect/PortSelect";
+import ToggleSwitch from "./ToggleSwitch";
+import { ConnectionState, Mode } from "./App";
+import { StyledInput } from "./styling/styling";
 
 type HeaderProps = {
-  onConnect: (path: string, baud: number) => void,
-  onDisconnect: () => void,
-  onChange: (mode: Mode) => void,
-  mode: Mode,
-  connectionState: ConnectionState,
-  disable?: boolean
-}
+  onConnect: (path: string, baud: number) => void;
+  onDisconnect: () => void;
+  onChange: (mode: Mode) => void;
+  mode: Mode;
+  connectionState: ConnectionState;
+  disable?: boolean;
+};
 
 type HeaderState = {
-  ports: SerialPort.PortInfo[],
-  path: string,
-  baud: number
-}
+  ports: SerialPort.PortInfo[];
+  path: string;
+  baud: number;
+};
 
-export class Header extends Component<HeaderProps, HeaderState>{
-
-  constructor(props: HeaderProps){
+export class Header extends Component<HeaderProps, HeaderState> {
+  constructor(props: HeaderProps) {
     super(props);
     this.state = {
       ports: [],
-      path: '',
-      baud: 921600
-    }
+      path: "",
+      baud: 921600,
+    };
   }
 
-  componentDidMount(){
-    this.getPorts()
+  componentDidMount() {
+    this.getPorts();
   }
 
   toggleConnection = () => {
-    const {connectionState} = this.props
-    const {path, baud} = this.state
+    const { connectionState } = this.props;
+    const { path, baud } = this.state;
     switch (connectionState) {
       case ConnectionState.Connecting:
-        return
+        return;
       case ConnectionState.Connected:
-        return this.props.onDisconnect()
+        return this.props.onDisconnect();
       case ConnectionState.Disconnected:
-          if(isNaN(baud)){
-            return
-          }
-          return this.props.onConnect(path, this.state.baud)
+        if (isNaN(baud)) {
+          return;
+        }
+        return this.props.onConnect(path, this.state.baud);
     }
-  }
+  };
 
   updatePath = (path: string) => {
-    this.props.onDisconnect()
-    this.setState({path})
-  }
+    this.props.onDisconnect();
+    this.setState({ path });
+  };
 
   getPorts = async () => {
-    const ports = await list()
-    this.setState({ports, path: ''})
-  }
+    const ports = await list();
+    this.setState({ ports, path: "" });
+  };
 
   connected = () => {
-    return this.props.connectionState === ConnectionState.Connected
-  }
+    return this.props.connectionState === ConnectionState.Connected;
+  };
 
   handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({baud: +e.target.value})
-  }
+    this.setState({ baud: +e.target.value });
+  };
 
-  render(){
-    const {ports, baud} = this.state
-    const {connectionState, onChange, mode, disable} = this.props
-    return(
-        <StyledHeader style={ disable ? {pointerEvents: 'none', opacity: '33%'} : {}}>
-          <Tabs>
-            <Tab selected={mode==='config'} onClick={() => onChange('config')}>Configure</Tab>
-            <Tab selected={mode==='viz'} onClick={() => onChange('viz')}>Visualize</Tab>
-          </Tabs>
-          <Connection>
-            <PortSelect onRefresh={this.getPorts} onChange={this.updatePath} ports={typeof ports === 'undefined' ? [''] : ports.map(p => (p as any).path)} />
-            <label style={{color: "steelblue", marginRight: "0"}}>Baudrate:</label>
-            <StyledInput disabled={connectionState === ConnectionState.Connected} defaultValue={baud.toString()} onChange={this.handleChange} style={{width: "60px"}} valid={!isNaN(baud)}/>
-            <ToggleSwitch state={this.connected()} onClick={this.toggleConnection} />
-            <Status connected={this.connected()}>{`${getConnectionText(connectionState)}`}</Status>
-          </Connection>
-        </StyledHeader>
-    )
+  render() {
+    const { ports, baud } = this.state;
+    const { connectionState, onChange, mode, disable } = this.props;
+    return (
+      <StyledHeader
+        style={disable ? { pointerEvents: "none", opacity: "33%" } : {}}
+      >
+        <Tabs>
+          <Tab selected={mode === "config"} onClick={() => onChange("config")}>
+            Configure
+          </Tab>
+          <Tab selected={mode === "viz"} onClick={() => onChange("viz")}>
+            Visualize
+          </Tab>
+        </Tabs>
+        <Connection>
+          <PortSelect
+            onRefresh={this.getPorts}
+            onChange={this.updatePath}
+            ports={
+              typeof ports === "undefined"
+                ? [""]
+                : ports.map((p) => (p as any).path)
+            }
+          />
+          <label style={{ color: "steelblue", marginRight: "0" }}>
+            Baudrate:
+          </label>
+          <StyledInput
+            disabled={connectionState === ConnectionState.Connected}
+            defaultValue={baud.toString()}
+            onChange={this.handleChange}
+            style={{ width: "60px" }}
+            valid={!isNaN(baud)}
+          />
+          <ToggleSwitch
+            state={this.connected()}
+            onClick={this.toggleConnection}
+          />
+          <Status connected={this.connected()}>{`${getConnectionText(
+            connectionState,
+          )}`}</Status>
+        </Connection>
+      </StyledHeader>
+    );
   }
 }
 
 function getConnectionText(state: ConnectionState) {
   switch (state) {
     case ConnectionState.Connecting:
-      return 'Connecting...'
+      return "Connecting...";
     case ConnectionState.Connected:
-      return 'Connected'
+      return "Connected";
     case ConnectionState.Disconnected:
-      return 'Disconnected'
+      return "Disconnected";
   }
 }
 
@@ -110,18 +135,18 @@ const Tabs = styled.span`
   & > * {
     margin-right: 20px;
   }
-`
+`;
 
-const Tab = styled.h2<{selected?: boolean}>`
+const Tab = styled.h2<{ selected?: boolean }>`
   display: inline-block
-  color: ${({selected}) => selected ? '#4b90ca' : 'white'};
+  color: ${({ selected }) => (selected ? "#4b90ca" : "white")};
   cursor: pointer;
-  text-decoration: ${({selected}) => selected ? 'underline' : ''};
+  text-decoration: ${({ selected }) => (selected ? "underline" : "")};
   &:hover{
     text-decoration: underline;
-    cursor: ${({selected}) => selected ? 'default' : 'pointer'};
+    cursor: ${({ selected }) => (selected ? "default" : "pointer")};
   }
-`
+`;
 
 const StyledHeader = styled.div`
   width: 100%;
@@ -132,7 +157,7 @@ const StyledHeader = styled.div`
   padding: 1%;
   box-sizing: border-box;
   background-color: #181818;
-`
+`;
 
 const Connection = styled.span`
   display: flex;
@@ -143,15 +168,15 @@ const Connection = styled.span`
   & > * {
     margin: 0 10px;
   }
-`
+`;
 
 const Status = styled.span<{ connected: boolean }>`
   transition: color 0.5s;
-  color: ${ ({ connected }) => connected ? '#46b477' : '#656565'};
+  color: ${({ connected }) => (connected ? "#46b477" : "#656565")};
   width: 100px;
   text-align: left;
   margin-left: 10px;
   margin-right: 0;
-`
+`;
 
 export default hot(Header);
