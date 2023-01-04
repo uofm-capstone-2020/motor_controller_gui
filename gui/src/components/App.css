@@ -19,11 +19,12 @@ code {
 
 ::-webkit-scrollbar {     
   background-color: #00000000;
+  max-width: 8px;
 }
 
 
 ::-webkit-scrollbar-thumb {
-  background:  #2B2B2B;
+  background:  #585858;
   border-radius: 15px;
 } 
 

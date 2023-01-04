@@ -37,6 +37,7 @@ import Serial, {
   FloatTo32Bit,
   IntTo16Bit,
 } from "../../modules/serial";
+import profiles from "./profiles";
 
 type ParameterFormProps = {
   sp: Serial | null;
@@ -151,8 +152,10 @@ export default class ParameterForm extends Component<
         <Container>
           <div
             style={{
-              margin: "0 2%",
-              alignSelf: "center",
+              margin: "0 0.5vw",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
             }}
           >
             <Header>Configuration Parameters</Header>
@@ -207,28 +210,79 @@ export default class ParameterForm extends Component<
           )}
         </Footer>
         <Menu>
-          <h2>Profiles</h2>
-          <div>
-            <p>Hello</p>
-            <p>Hello</p>
-            <p>Hello</p>
-            <p>Hello</p>
-            <p>Hello</p>
-            <p>Hello</p>
-            <p>Hello</p>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <Header>Profiles</Header>
           </div>
-          <p>button</p>
+          <ProfilesContainer>
+            {profiles.map(({ name, initial, backgroundColor }, index) => (
+              <ProfileCard key={index}>
+                <ProfileImage backgroundColor={backgroundColor}>
+                  <p>{initial}</p>
+                </ProfileImage>
+                <ProfileName>{name}</ProfileName>
+              </ProfileCard>
+            ))}
+          </ProfilesContainer>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Button>Create New Profile</Button>
+          </div>
         </Menu>
       </>
     );
   }
 }
 
+const ProfileCard = styled.div<{ selected?: boolean }>`
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border-radius: 10px;
+  padding: 8px;
+  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.3);
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const ProfileName = styled.p`
+  margin: 0 0 0 10px;
+  font-size: 20px;
+  font-weight: bold;
+`;
+
+const ProfileImage = styled.div<{
+  backgroundColor: string;
+}>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  border-radius 17.5px;
+  font-size: 20px;
+  font-weight: bold;
+  background-color: ${({ backgroundColor }) => backgroundColor};
+`;
+
+const ProfilesContainer = styled.div`
+  display: grid;
+  grid-auto-rows: max-content;
+  grid-auto-columns: 97%;
+  row-gap: 10px;
+  overflow-y: scroll;
+`;
+
 const Menu = styled.div`
   grid-area: menu;
   display: grid;
   background-color: #e4e4e4;
-  padding: 1%;
+  padding: 1% 5%;
   grid-template-rows: 1fr 7fr 1fr;
 `;
 
@@ -237,13 +291,10 @@ const Search = styled.input`
   border: 0;
   padding: 1%;
   width: 45%;
-  float: right;
 `;
 
 const Header = styled.h2`
   margin: 0;
-  float: left;
-  display: inline-block;
   color: #4b90ca;
   cursor: default;
 `;
@@ -264,7 +315,7 @@ const Container = styled.div`
   grid-area: container;
   padding: 1%;
   display: grid;
-  grid-template-rows: 1fr 7fr;
+  grid-template-rows: 1fr 8fr;
   overflow: hidden;
   background-color: #202020;
 `;
