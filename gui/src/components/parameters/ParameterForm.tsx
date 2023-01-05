@@ -1,12 +1,12 @@
 /**
  * messages are sent in 7 byte formats
- * 
+ *
  * 1st byte is the type of request to the microcontroller
- * 
- * Subsequent bytes are the payload of the request 
+ *
+ * Subsequent bytes are the payload of the request
  *  - only needed when writing a control parameter into flash memory
  *  - need to include the 2 byte parameter ID in this case
- * 
+ *
  * Types of Requests:
  *    0xEE: Erase flash memory
  *    0x97: Program flash memory with the supplied payload
@@ -14,12 +14,12 @@
  *    0x1E: start low-frequency live logging
  *    0x10: Cancel live logging
  *    0x1D: Download the data log
- * 
- * 
+ *
+ *
  * Note: When writing parameters, this program will clear all of their
  *       current values on the microcontroller and update them with what is in the
  *       GUI. (Might be more efficient to write individual parameters???)
- * 
+ *
  */
 
 import React, { Component } from "react";
@@ -37,6 +37,7 @@ import Serial, {
   FloatTo32Bit,
   IntTo16Bit,
 } from "../../modules/serial";
+import profiles from "./profiles";
 
 type ParameterFormProps = {
   sp: Serial | null;
@@ -50,6 +51,7 @@ type ParameterFormState = {
   status: string;
   writing: boolean;
   valid: boolean;
+  profile: number;
 };
 
 export default class ParameterForm extends Component<
@@ -67,6 +69,7 @@ export default class ParameterForm extends Component<
       status: "",
       writing: false,
       valid: true,
+      profile: 0,
     };
   }
 
@@ -143,13 +146,47 @@ export default class ParameterForm extends Component<
     }
   };
 
+  switchProfile = (index: number) => {
+    const { profile } = this.state;
+    if (profile !== index) {
+      this.setState({ profile: index });
+    }
+  };
+
+  componentDidUpdate(
+    prevProps: ParameterFormProps,
+    prevState: ParameterFormState,
+  ) {
+    if (this.state.profile !== prevState.profile) {
+      this.updatePresets();
+    }
+  }
+
+  updatePresets = () => {
+    const { profile, params } = this.state;
+    const newValues = profiles[profile].presets;
+    newValues.forEach((newValue, index) => {
+      params[index].value = newValue;
+      params[index].valid = params[index].validation(newValue);
+    });
+    this.setState({ params, valid: this.validate() });
+  };
+
   render() {
-    const { search, step, params, writing, valid, status } = this.state;
+    const { search, step, params, writing, valid, status, profile } =
+      this.state;
     const { sp } = this.props;
     return (
       <>
         <Container>
-          <div style={{ margin: "0 2%", alignSelf: "center" }}>
+          <div
+            style={{
+              margin: "0 0.5vw",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
             <Header>Configuration Parameters</Header>
             <Search
               placeholder="Search..."
@@ -159,7 +196,7 @@ export default class ParameterForm extends Component<
             />
           </div>
           <Scrollable>
-            {Object.entries(parameters)
+            {Object.entries(params)
               // filter out parameters that don't match search
               .filter(
                 ([id, { description, name }]) =>
@@ -170,7 +207,7 @@ export default class ParameterForm extends Component<
                   <StyledLabel valid={valid}>{name}</StyledLabel>
                   <StyledInput
                     valid={valid}
-                    defaultValue={value}
+                    value={value}
                     onChange={(e) =>
                       this.updateParamters(parseInt(id), e.target.value)
                     }
@@ -201,28 +238,107 @@ export default class ParameterForm extends Component<
             </span>
           )}
         </Footer>
+        <Menu>
+          <div style={{ display: "flex", alignItems: "center", paddingLeft: "2%" }}>
+            <Header>Profiles</Header>
+          </div>
+          <ProfilesContainer>
+            {profiles.map(({ name, initial, backgroundColor }, index) => {
+              return (
+                <ProfileCard
+                  key={index}
+                  selected={index === profile}
+                  onClick={() => this.switchProfile(index)}
+                >
+                  <ProfileImage backgroundColor={backgroundColor}>
+                    <p>{initial}</p>
+                  </ProfileImage>
+                  <ProfileName>{name}</ProfileName>
+                </ProfileCard>
+              );
+            })}
+          </ProfilesContainer>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Button>Create New Profile</Button>
+          </div>
+        </Menu>
       </>
     );
   }
 }
+
+const ProfileCard = styled.div<{ selected: boolean }>`
+  display: flex;
+  align-items: center;
+  background-color: ${({ selected }) => (selected ? "white" : "none")};
+  border-radius: 10px;
+  padding: 8px;
+  ${({ selected }) => selected && "box-shadow: 0 4px 5px rgba(0, 0, 0, 0.3);"}
+  &:hover {
+    cursor: pointer;
+  };
+
+`;
+
+const ProfileName = styled.p`
+  margin: 0 0 0 10px;
+  font-size: 20px;
+  font-weight: bold;
+`;
+
+const ProfileImage = styled.div<{
+  backgroundColor: string;
+}>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  border-radius 17.5px;
+  font-size: 20px;
+  font-weight: bold;
+  background-color: ${({ backgroundColor }) => backgroundColor};
+`;
+
+const ProfilesContainer = styled.div`
+  display: grid;
+  grid-auto-rows: max-content;
+  grid-auto-columns: 97%;
+  row-gap: 8px;
+  flex-direction: column;
+  padding: 1% 2%;
+  overflow-y: scroll;
+`;
+
+const Menu = styled.div`
+  grid-area: menu;
+  display: grid;
+  background-color: #e4e4e4;
+  padding: 0.75vw;
+  grid-template-rows: 1fr 8fr 1fr;
+`;
 
 const Search = styled.input`
   background-color: #454545;
   border: 0;
   padding: 1%;
   width: 45%;
-  float: right;
 `;
 
 const Header = styled.h2`
-    margin: 0;
-    float: left;
-    display: inline-block
-    color: #4b90ca;
-    cursor: default;
+  margin: 0;
+  color: #4b90ca;
+  cursor: default;
 `;
 
 const Footer = styled.div`
+  grid-area: footer;
   width: 100%;
   display: grid;
   grid-template-columns: 1.5fr 6fr 2fr;
@@ -234,9 +350,10 @@ const Footer = styled.div`
 `;
 
 const Container = styled.div`
-  padding: 1%;
+  grid-area: container;
+  padding: 0.75vw;
   display: grid;
-  grid-template-rows: 1fr 7fr;
+  grid-template-rows: 1fr 8fr;
   overflow: hidden;
   background-color: #202020;
 `;

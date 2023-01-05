@@ -141,8 +141,13 @@ const Grid = styled.div`
   height: calc(98vh);
   display: grid;
   grid-template-rows: 1fr 9fr 1fr;
-  grid-gap: 1%;
+  grid-template-columns: 4fr 1fr;
+  gap: 8px;
   padding: 1%;
   box-sizing: border-box;
+  grid-template-areas:
+    "header header"
+    "container menu"
+    "footer menu";
 `;
 export default hot(App);

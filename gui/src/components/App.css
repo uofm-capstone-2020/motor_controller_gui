@@ -19,11 +19,12 @@ code {
 
 ::-webkit-scrollbar {     
   background-color: #00000000;
+  max-width: 7px;
 }
 
 
 ::-webkit-scrollbar-thumb {
-  background:  #2B2B2B;
+  background:  #585858;
   border-radius: 15px;
 } 
 
@@ -37,5 +38,5 @@ div.tooltip {
   background: lightsteelblue;	
   border: 0px;		
   border-radius: 8px;			
-  pointer-events: none;			
+  pointer-events: none;
 }
