@@ -86,6 +86,9 @@ export class Header extends Component<HeaderProps, HeaderState> {
           <Tab selected={mode === "viz"} onClick={() => onChange("viz")}>
             Visualize
           </Tab>
+          <Tab selected={mode === "debug"} onClick={() => onChange("debug")}>
+            Debug
+          </Tab>
         </Tabs>
         <Connection>
           <PortSelect
@@ -139,7 +142,7 @@ const Tabs = styled.span`
 
 const Tab = styled.h2<{ selected?: boolean }>`
   display: inline-block
-  color: ${({selected}) => selected ? '#367AFF' : '#000000'};
+  color: ${({ selected }) => (selected ? "#367AFF" : "#000000")};
   cursor: pointer;
   text-decoration: ${({ selected }) => (selected ? "underline" : "")};
   &:hover{
@@ -157,8 +160,8 @@ const StyledHeader = styled.div`
   justify-content: space-between;
   padding: 1%;
   box-sizing: border-box;
-  background-color: #E4E4E4;
-`
+  background-color: #e4e4e4;
+`;
 
 const Connection = styled.span`
   display: flex;
@@ -173,7 +176,7 @@ const Connection = styled.span`
 
 const Status = styled.span<{ connected: boolean }>`
   transition: color 0.5s;
-  color: ${ ({ connected }) => connected ? '#7BB557' : '#FF7B7B'};
+  color: ${({ connected }) => (connected ? "#7BB557" : "#FF7B7B")};
   width: 100px;
   text-align: left;
   margin-left: 10px;
