@@ -175,8 +175,9 @@ const Status = styled.span<{ connected: boolean }>`
   transition: color 0.5s;
   color: ${ ({ connected }) => connected ? '#7BB557' : '#FF7B7B'};
   width: 100px;
+  font-weight: bold;
   text-align: left;
-  margin-left: 10px;
+  margin-left: 5px;
   margin-right: 0;
 `;
 
