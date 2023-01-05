@@ -142,8 +142,8 @@ const Grid = styled.div`
   display: grid;
   grid-template-rows: 1fr 9fr 1fr;
   grid-template-columns: 4fr 1fr;
-  gap: 8px;
-  padding: 1%;
+  gap: 2px;
+  padding: 0.25%;
   box-sizing: border-box;
   grid-template-areas:
     "header header"
