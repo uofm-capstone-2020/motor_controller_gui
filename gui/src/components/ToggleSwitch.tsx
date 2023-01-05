@@ -13,7 +13,7 @@ export default function ToggleSwitch({onClick, state}: {onClick: () => void, sta
 
 const Container = styled.span<{state: boolean}>`
   transition: background-color 0.25s ease-in;
-  background-color: ${({state}) => state ? '#46b47764' : "#333333"};
+  background-color: ${({state}) => state ? '#ffffff' : "#ffffff"};
   width: 55px;
   height: 20px;
   border-radius: 30px;
@@ -28,7 +28,7 @@ const Container = styled.span<{state: boolean}>`
 const Switch = styled.span<{state: boolean}>`
   transition: margin-left 0.25s ease-in, background-color 0.25s ease-in;
   margin-left: ${({state}) => state ? '32px' : '3px'};
-  background-color: ${({state}) => state ? '#46b477' : '#656565'};
+  background-color: ${({state}) => state ? '#7BB557' : '#FF7B7B'};
   display: inline-block;
   border-radius: 50px;
   width: 20px;

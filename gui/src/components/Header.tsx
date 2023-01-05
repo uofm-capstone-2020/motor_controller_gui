@@ -85,7 +85,7 @@ export class Header extends Component<HeaderProps, HeaderState>{
           </Tabs>
           <Connection>
             <PortSelect onRefresh={this.getPorts} onChange={this.updatePath} ports={typeof ports === 'undefined' ? [''] : ports.map(p => (p as any).path)} />
-            <label style={{color: "steelblue", marginRight: "0"}}>Baudrate:</label>
+            <label style={{color: "black", marginRight: "0"}}>Baudrate:</label>
             <StyledInput disabled={connectionState === ConnectionState.Connected} defaultValue={baud.toString()} onChange={this.handleChange} style={{width: "60px"}} valid={!isNaN(baud)}/>
             <ToggleSwitch state={this.connected()} onClick={this.toggleConnection} />
             <Status connected={this.connected()}>{`${getConnectionText(connectionState)}`}</Status>
@@ -114,7 +114,7 @@ const Tabs = styled.span`
 
 const Tab = styled.h2<{selected?: boolean}>`
   display: inline-block
-  color: ${({selected}) => selected ? '#4b90ca' : 'white'};
+  color: ${({selected}) => selected ? '#367AFF' : '#000000'};
   cursor: pointer;
   text-decoration: ${({selected}) => selected ? 'underline' : ''};
   &:hover{
@@ -131,7 +131,7 @@ const StyledHeader = styled.div`
   justify-content: space-between;
   padding: 1%;
   box-sizing: border-box;
-  background-color: #181818;
+  background-color: #E4E4E4;
 `
 
 const Connection = styled.span`
@@ -147,7 +147,7 @@ const Connection = styled.span`
 
 const Status = styled.span<{ connected: boolean }>`
   transition: color 0.5s;
-  color: ${ ({ connected }) => connected ? '#46b477' : '#656565'};
+  color: ${ ({ connected }) => connected ? '#7BB557' : '#FF7B7B'};
   width: 100px;
   text-align: left;
   margin-left: 10px;

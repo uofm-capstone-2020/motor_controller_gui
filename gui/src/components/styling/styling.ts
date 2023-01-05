@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const StyledLabel = styled.p<{ valid: boolean }>`
-  color: ${ ({ valid }) => valid ? '#4b90ca' : 'rgba(255, 64, 64, 1)'};
+  color: ${ ({ valid }) => valid ? '#000000' : '#818181'};
   display: inline-block;
   width: 450px;
   margin-right: 10px;
@@ -11,7 +11,7 @@ export const StyledLabel = styled.p<{ valid: boolean }>`
 `
 
 export const StyledUnit = styled.p<{ valid: boolean }>`
-  color: ${ ({ valid }) => valid ? '#4b90ca' : 'rgba(255, 64, 64, 1)'};
+  color: ${ ({ valid }) => valid ? '#000000' : '#818181'};
   display: inline-block;
   min-width: 80px;
   text-align: end;
@@ -20,7 +20,7 @@ export const StyledUnit = styled.p<{ valid: boolean }>`
 `
 
 export const StyledInput = styled.input<{ valid: boolean }>`
-  background-color: ${ ({ valid }) => valid ? '#545454' : 'rgba(255, 64, 64, 1)'};
+  background-color: ${ ({ valid }) => valid ? '#ffffff' : '#ffffff'};
   margin-right: 10px;
   width: 100%;
   border: 0;
@@ -38,11 +38,11 @@ export const Button = styled.button<{ disabled?: boolean, height?: string }>`
   padding: 10px 25px;
   border-radius: 30px;
   font-size: 11px;
-  background-color: ${ ({ disabled }) => disabled ? 'grey' : '#4b90ca'};
+  background-color: ${ ({ disabled }) => disabled ? '#414141' : '#367AFF'};
   border: 0;
   transition-property: transform;
   transition-duration: 0.3s;
-  color: ${ ({ disabled }) => disabled ? '#333333' : 'black'};
+  color: ${ ({ disabled }) => disabled ? 'white' : '#ffffff'};
   &:focus {
     outline: none;
   }

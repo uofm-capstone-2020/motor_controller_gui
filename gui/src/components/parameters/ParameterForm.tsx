@@ -142,7 +142,7 @@ export default class ParameterForm extends Component<ParameterFormProps, Paramet
 }
 
 const Search = styled.input`
-    background-color: #454545;
+    background-color: #E4E4E4;
     border: 0;
     padding: 1%;
     width: 45%;
@@ -153,7 +153,7 @@ const Header = styled.h2`
     margin: 0;
     float: left;
     display: inline-block
-    color: #4b90ca;
+    color: #000000;
     cursor: default;
 `
 
@@ -165,7 +165,7 @@ const Footer = styled.div`
   align-items: center;
   padding: 1%;
   box-sizing: border-box;
-  background-color: #181818;
+  background-color: #ffffff;
 `
 
 const Container = styled.div`
@@ -173,13 +173,13 @@ const Container = styled.div`
     display: grid;
     grid-template-rows: 1fr 7fr;
     overflow: hidden;
-    background-color: #202020;
+    background-color: #ffffff;
 `
 
 const Entry = styled.div<{valid: boolean}>`
     display: flex;
     align-items: center;
-    background-color: ${({valid}) => valid ? '#242424' : '#B0002030'};
+    background-color: ${({valid}) => valid ? '#E4E4E4' : '#B0002030'};
     height: 100%;
     padding: 0 1vw;
     border: ${({valid}) => valid ? '0' : '1px solid #B0002060'}

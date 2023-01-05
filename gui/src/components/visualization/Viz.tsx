@@ -286,7 +286,7 @@ const Header = styled.h2`
     margin: 0;
     float: left;
     display: inline-block
-    color: #4b90ca;
+    color: #000000;
     cursor: default;
 `
 
@@ -298,7 +298,7 @@ const Footer = styled.div`
   justify-items: center;
   align-items: center;
   box-sizing: border-box;
-  background-color: #181818;
+  background-color: #ffffff;
 `
 
 const Container = styled.div`
@@ -306,5 +306,5 @@ const Container = styled.div`
     display: grid;
     grid-template-rows: 1fr 7fr;
     overflow: hidden;
-    background-color: #202020;
+    background-color: #ffffff;
 `

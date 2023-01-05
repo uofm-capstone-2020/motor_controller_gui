@@ -96,7 +96,7 @@ class App extends Component<{}, AppState>{
       <>
       {process.platform === 'win32' && 
         <div>
-          <Titlebar title="Motor Controller" backgroundColor="#000000"/>
+          <Titlebar title="Motor Controller" backgroundColor="#818181"/>
         </div>
       }
       <Grid>
