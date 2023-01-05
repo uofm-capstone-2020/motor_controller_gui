@@ -97,7 +97,7 @@ export class Header extends Component<HeaderProps, HeaderState> {
                 : ports.map((p) => (p as any).path)
             }
           />
-          <label style={{ color: "steelblue", marginRight: "0" }}>
+          <label style={{ color: "#000000", marginRight: "0" }}>
             Baudrate:
           </label>
           <StyledInput
