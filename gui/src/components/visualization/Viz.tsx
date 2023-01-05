@@ -349,7 +349,7 @@ const Footer = styled.div`
   justify-items: center;
   align-items: center;
   box-sizing: border-box;
-  background-color: #181818;
+  background-color: #E4E4E4;
 `;
 
 const Container = styled.div`
@@ -357,5 +357,5 @@ const Container = styled.div`
   display: grid;
   grid-template-rows: 1fr 7fr;
   overflow: hidden;
-  background-color: #202020;
+  background-color: #ffffff;
 `;
