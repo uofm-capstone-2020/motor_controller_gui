@@ -100,7 +100,7 @@ export class Header extends Component<HeaderProps, HeaderState> {
                 : ports.map((p) => (p as any).path)
             }
           />
-          <label style={{ color: "steelblue", marginRight: "0" }}>
+          <label style={{ color: "#000000", marginRight: "0" }}>
             Baudrate:
           </label>
           <StyledInput
@@ -178,8 +178,9 @@ const Status = styled.span<{ connected: boolean }>`
   transition: color 0.5s;
   color: ${({ connected }) => (connected ? "#7BB557" : "#FF7B7B")};
   width: 100px;
+  font-weight: bold;
   text-align: left;
-  margin-left: 10px;
+  margin-left: 5px;
   margin-right: 0;
 `;
 

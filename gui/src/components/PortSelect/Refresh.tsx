@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 export default function Refresh({ onClick }: { onClick: () => void }) {
-  const [color, setColor] = useState("#4682b4");
+  const [color, setColor] = useState("#E4E4E4");
   return (
     <Frame
       onClick={onClick}
       onMouseDown={() => setColor("#FFFFFF")}
-      onMouseUp={() => setColor("#4682b4")}
+      onMouseUp={() => setColor("#000000")}
     >
       <svg width="32" height="32" xmlns="http://www.w3.org/2000/svg">
         <g>
