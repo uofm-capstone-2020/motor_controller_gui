@@ -51,6 +51,7 @@ type ParameterFormState = {
   status: string;
   writing: boolean;
   valid: boolean;
+  profile: number;
 };
 
 export default class ParameterForm extends Component<
@@ -68,6 +69,7 @@ export default class ParameterForm extends Component<
       status: "",
       writing: false,
       valid: true,
+      profile: 0,
     };
   }
 
@@ -144,8 +146,35 @@ export default class ParameterForm extends Component<
     }
   };
 
+  switchProfile = (index: number) => {
+    const { profile } = this.state;
+    if (profile !== index) {
+      this.setState({ profile: index });
+    }
+  };
+
+  componentDidUpdate(
+    prevProps: ParameterFormProps,
+    prevState: ParameterFormState,
+  ) {
+    if (this.state.profile !== prevState.profile) {
+      this.updatePresets();
+    }
+  }
+
+  updatePresets = () => {
+    const { profile, params } = this.state;
+    const newValues = profiles[profile].presets;
+    newValues.forEach((newValue, index) => {
+      params[index].value = newValue;
+      params[index].valid = params[index].validation(newValue);
+    });
+    this.setState({ params, valid: this.validate() });
+  };
+
   render() {
-    const { search, step, params, writing, valid, status } = this.state;
+    const { search, step, params, writing, valid, status, profile } =
+      this.state;
     const { sp } = this.props;
     return (
       <>
@@ -167,7 +196,7 @@ export default class ParameterForm extends Component<
             />
           </div>
           <Scrollable>
-            {Object.entries(parameters)
+            {Object.entries(params)
               // filter out parameters that don't match search
               .filter(
                 ([id, { description, name }]) =>
@@ -178,7 +207,7 @@ export default class ParameterForm extends Component<
                   <StyledLabel valid={valid}>{name}</StyledLabel>
                   <StyledInput
                     valid={valid}
-                    defaultValue={value}
+                    value={value}
                     onChange={(e) =>
                       this.updateParamters(parseInt(id), e.target.value)
                     }
@@ -210,18 +239,24 @@ export default class ParameterForm extends Component<
           )}
         </Footer>
         <Menu>
-          <div style={{ display: "flex", alignItems: "center" }}>
+          <div style={{ display: "flex", alignItems: "center", paddingLeft: "2%" }}>
             <Header>Profiles</Header>
           </div>
           <ProfilesContainer>
-            {profiles.map(({ name, initial, backgroundColor }, index) => (
-              <ProfileCard key={index}>
-                <ProfileImage backgroundColor={backgroundColor}>
-                  <p>{initial}</p>
-                </ProfileImage>
-                <ProfileName>{name}</ProfileName>
-              </ProfileCard>
-            ))}
+            {profiles.map(({ name, initial, backgroundColor }, index) => {
+              return (
+                <ProfileCard
+                  key={index}
+                  selected={index === profile}
+                  onClick={() => this.switchProfile(index)}
+                >
+                  <ProfileImage backgroundColor={backgroundColor}>
+                    <p>{initial}</p>
+                  </ProfileImage>
+                  <ProfileName>{name}</ProfileName>
+                </ProfileCard>
+              );
+            })}
           </ProfilesContainer>
           <div
             style={{
@@ -238,16 +273,17 @@ export default class ParameterForm extends Component<
   }
 }
 
-const ProfileCard = styled.div<{ selected?: boolean }>`
+const ProfileCard = styled.div<{ selected: boolean }>`
   display: flex;
   align-items: center;
-  background-color: white;
+  background-color: ${({ selected }) => (selected ? "white" : "none")};
   border-radius: 10px;
   padding: 8px;
-  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.3);
+  ${({ selected }) => selected && "box-shadow: 0 4px 5px rgba(0, 0, 0, 0.3);"}
   &:hover {
     cursor: pointer;
-  }
+  };
+
 `;
 
 const ProfileName = styled.p`
@@ -274,7 +310,9 @@ const ProfilesContainer = styled.div`
   display: grid;
   grid-auto-rows: max-content;
   grid-auto-columns: 97%;
-  row-gap: 10px;
+  row-gap: 8px;
+  flex-direction: column;
+  padding: 1% 2%;
   overflow-y: scroll;
 `;
 
@@ -282,8 +320,8 @@ const Menu = styled.div`
   grid-area: menu;
   display: grid;
   background-color: #e4e4e4;
-  padding: 1% 5%;
-  grid-template-rows: 1fr 7fr 1fr;
+  padding: 0.75vw;
+  grid-template-rows: 1fr 8fr 1fr;
 `;
 
 const Search = styled.input`
@@ -313,7 +351,7 @@ const Footer = styled.div`
 
 const Container = styled.div`
   grid-area: container;
-  padding: 1%;
+  padding: 0.75vw;
   display: grid;
   grid-template-rows: 1fr 8fr;
   overflow: hidden;
