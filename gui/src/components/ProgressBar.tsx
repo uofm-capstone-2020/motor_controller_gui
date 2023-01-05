@@ -12,7 +12,7 @@ export default function ProgressBar(
 }
 
 const Container = styled.div`
-    border: 1px solid #222222;
+    border: 1px solid #ffffff;
     width: 100%;
     height: 25px;
     border-radius: 25px;
@@ -20,7 +20,7 @@ const Container = styled.div`
 
 const Progress = styled.div<{progress: number}>`
     width: ${({progress}) => `${progress}%`}
-    background-color: #46b477;
+    background-color: #ffffff;
     height: 100%;
     border-radius: inherit;
     transition: width 0.25s linear;

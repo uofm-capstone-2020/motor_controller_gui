@@ -337,7 +337,7 @@ const Header = styled.h2`
     margin: 0;
     float: left;
     display: inline-block
-    color: #4b90ca;
+    color: #000000;
     cursor: default;
 `;
 
