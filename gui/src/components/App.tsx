@@ -141,15 +141,14 @@ function ComponentSwitch({
 export type Mode = "config" | "viz" | "debug";
 
 const Grid = styled.div<{ mode: string }>`
-  height: calc(98vh);
+  height: calc(96vh);
   display: grid;
   ${({ mode }) =>
     mode === "debug"
       ? "grid-template-rows: 1fr 10fr"
       : "grid-template-rows: 1fr 9fr 1fr"};
   grid-template-columns: 4fr 1fr;
-  gap: 2px;
-  padding: 5px;
+  grid-gap: 0.5px;
   box-sizing: border-box;
   grid-template-areas:
     "header header"

@@ -2,13 +2,24 @@ import React from "react";
 import styled from "styled-components";
 
 const DebugForm = () => {
-  return <Container></Container>;
+  return (
+    <>
+      <Container></Container>
+      <Menu></Menu>
+    </>
+  );
 };
 
 export default DebugForm;
 
 const Container = styled.div`
+  grid-area: container;
   display: grid;
   background-color: white;
-  grid-template-columns: 5fr 1fr;
+`;
+
+const Menu = styled.div`
+  grid-area: menu;
+  display: grid;
+  background-color: #e4e4e4;
 `;

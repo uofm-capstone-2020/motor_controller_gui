@@ -200,7 +200,8 @@ export default class ParameterForm extends Component<
               // filter out parameters that don't match search
               .filter(
                 ([id, { description, name }]) =>
-                  description.includes(search) || name.includes(search),
+                  description.toLowerCase().includes(search) ||
+                  name.toLowerCase().includes(search),
               )
               .map(([id, { name, description, type, unit, value, valid }]) => (
                 <Entry key={id} valid={valid} title={`${description}: ${type}`}>
@@ -225,7 +226,7 @@ export default class ParameterForm extends Component<
           >
             Write Paramters
           </Button>
-          <ProgressBar
+          {/* <ProgressBar
             step={step}
             max={Object.entries(params).length + 1}
             enable={writing}
@@ -236,7 +237,7 @@ export default class ParameterForm extends Component<
             >
               {status}
             </span>
-          )}
+          )} */}
         </Footer>
         <Menu>
           <div
@@ -290,7 +291,7 @@ const ProfileCard = styled.div<{ selected: boolean }>`
 const ProfileName = styled.p`
   margin: 0 0 0 10px;
   font-size: 20px;
-  font-weight: bold;
+  font-weight: 500;
 `;
 
 const ProfileImage = styled.div<{
@@ -302,6 +303,7 @@ const ProfileImage = styled.div<{
   width: 35px;
   height: 35px;
   border-radius 17.5px;
+  border: 0.8px solid rgb(0, 0, 0, 0.15);
   font-size: 20px;
   font-weight: bold;
   background-color: ${({ backgroundColor }) => backgroundColor};
@@ -312,7 +314,6 @@ const ProfilesContainer = styled.div`
   grid-auto-rows: max-content;
   grid-auto-columns: 97%;
   row-gap: 8px;
-  flex-direction: column;
   padding: 1% 2%;
   overflow-y: scroll;
 `;
@@ -347,7 +348,7 @@ const Footer = styled.div`
   align-items: center;
   padding: 2%;
   box-sizing: border-box;
-  background-color: #ffffff;
+  background-color: #e4e4e4;
 `;
 
 const Container = styled.div`
@@ -360,15 +361,15 @@ const Container = styled.div`
 `;
 
 const Entry = styled.div<{ valid: boolean }>`
-    display: flex;
-    align-items: center;
-    background-color: ${({ valid }) => (valid ? "#E4E4E4" : "#B0002030")};
-    height: 100%;
-    padding: 0 1vw;
-    border-radius: 10px;
-    font-weight: bold;
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
-    border: ${({ valid }) => (valid ? "0" : "1px solid #B0002060")};
+  display: flex;
+  align-items: center;
+  background-color: ${({ valid }) => (valid ? "#E4E4E4" : "#B0002030")};
+  height: 100%;
+  padding: 0 1vw;
+  border-radius: 10px;
+  font-weight: bold;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+  border: ${({ valid }) => (valid ? "0" : "1px solid #B0002060")};
 `;
 const Scrollable = styled.div`
   display: grid;

@@ -77,7 +77,7 @@ export class Header extends Component<HeaderProps, HeaderState> {
     const { connectionState, onChange, mode, disable } = this.props;
     return (
       <StyledHeader
-        style={disable ? { pointerEvents: "none", opacity: "33%" } : {}}
+        style={disable ? { pointerEvents: "none", opacity: "60%" } : {}}
       >
         <Tabs>
           <Tab selected={mode === "config"} onClick={() => onChange("config")}>
@@ -149,6 +149,7 @@ const Tab = styled.h2<{ selected?: boolean }>`
     text-decoration: underline;
     cursor: ${({ selected }) => (selected ? "default" : "pointer")};
   }
+  user-select: none;
 `;
 
 const StyledHeader = styled.div`
@@ -158,7 +159,7 @@ const StyledHeader = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 1%;
+  padding: 1.25vw;
   box-sizing: border-box;
   background-color: #e4e4e4;
 `;
