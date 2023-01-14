@@ -254,26 +254,32 @@ export default class DataViz extends Component<VizProps, VizState> {
           )}
         </Footer>
         <Menu>
-          <div
-            style={{ display: "flex", alignItems: "center", paddingLeft: "2%" }}
-          >
-            <Header>Favourites</Header>
-          </div>
-          <FavouritesContainer>
-            {/* probably need a system here where we have all parameters, and a preset min
+          <MenuContainer>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                paddingLeft: "2%",
+              }}
+            >
+              <Header>Favourites</Header>
+            </div>
+            <FavouritesContainer>
+              {/* probably need a system here where we have all parameters, and a preset min
                 and max value for them. Then, we can compare the reading to its min and max
-                to determine its background colour */}
-            {favourites.map(({ name, value, color }, index) => (
-              <FavouriteCard key={index} backgroundColor={color}>
-                <p style={{ margin: 0, fontWeight: 500 }}>{name}</p>
-                <div style={{ alignSelf: "center" }}>
-                  <p style={{ margin: 0, fontSize: "30px", fontWeight: 500 }}>
-                    {value}
-                  </p>
-                </div>
-              </FavouriteCard>
-            ))}
-          </FavouritesContainer>
+              to determine its background colour */}
+              {favourites.map(({ name, value, color }, index) => (
+                <FavouriteCard key={index} backgroundColor={color}>
+                  <p style={{ margin: 0, fontWeight: 500 }}>{name}</p>
+                  <div style={{ alignSelf: "center" }}>
+                    <p style={{ margin: 0, fontSize: "30px", fontWeight: 500 }}>
+                      {value}
+                    </p>
+                  </div>
+                </FavouriteCard>
+              ))}
+            </FavouritesContainer>
+          </MenuContainer>
           <div
             style={{
               display: "flex",
@@ -364,9 +370,15 @@ const Menu = styled.div`
   grid-area: menu;
   display: grid;
   background-color: #e4e4e4;
-  padding: 0.5vw;
-  grid-template-rows: 1fr 8fr 1fr;
+  grid-template-rows: 9fr 1fr;
 `;
+
+const MenuContainer = styled.div`
+  display: grid;
+  grid-template-rows: 1fr 8fr;
+  padding: 0.5vw 0.5vw 0 0.5vw;
+  overflow-y: scroll;
+`
 
 const StyledTabs = styled.span`
   & > * {
@@ -396,7 +408,7 @@ const Header = styled.h2`
 const Footer = styled.div`
   grid-area: footer;
   display: flex;
-  padding: 2%;
+  padding: 0 2%;
   justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
@@ -406,7 +418,7 @@ const Footer = styled.div`
 const Container = styled.div`
   padding: 1%;
   display: grid;
-  grid-template-rows: 1fr 7fr;
+  grid-template-rows: 1fr 9fr;
   overflow: hidden;
   background-color: #ffffff;
 `;
